@@ -1,0 +1,169 @@
+<extend name="Base/pageall"/>
+<block name="body">
+<div class="main"><div class="main_nav"><a rel="nofollow" href="/">首页</a>&gt;<p class="red fwb">个人中心</p></div><div class="main_center"><div class="center_left"><dl><dt><a rel="nofollow">订单中心</a></dt><dd><a rel="nofollow" href='{:U("center/index")}'>主页</dd>
+<dd><a rel="nofollow" href='{:U("center/coupon")}'>优惠券</dd><dd><a rel="nofollow" href='{:U("center/allorder")}'>我的全部订单</a></dd>
+</dl><dl class="last"><dt><a rel="nofollow">个人中心</a></dt><dd><a href='{:U("center/information")}'>账户信息</a></dd><dd><a rel="nofollow" href='{:U("shopcart/index")}'>我的购物车</a></dd><dd><a rel="nofollow" href='{:U("center/collect")}'>我的收藏</a></dd></dl></div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+<span  style="display: block;padding:15px;font-size:17px;text-align:center;color:red;margin:20px 0;">{$msg} &nbsp;&nbsp;{$id}</span>
+
+	<form action='{:U()}' method="post" name="actform" style="float:left;;width:29%" >
+	<input type="hidden" name="id" value="{$id}">
+       <div id="write">
+	   
+<ul> <li><div class="form-item">
+			<label class="item-label">提示:<span class="red">{$info}</span> </label>
+		
+		</div></li>
+		<li><div class="form-item">
+			<label class="item-label">换货数量<span class="check-tips"></span> </label>
+			<div class="controls">
+			<input type="text" class="text input-large" name="num" >				
+			</div>
+		</div></li>
+			<li><div class="form-item">
+			<label class="item-label">说明<span class="check-tips"></span> </label>
+			<div class="controls">
+			<input type="text" class="text input-large" name="title" >				
+			</div>
+		</div></li>
+			<li>
+			<div class="form-item">
+			<label class="item-label">描述<span class="check-tips"></span> </label>
+			<div class="controls">
+			<textarea rows="9" cols="20" name="reason"></textarea>				
+			</div>
+		</div></li>
+			 
+			 <li><span style="margin: 0 21px"></span><input type="submit" class="btn_submit_pay" value="提交" /></li>
+			
+
+</ul> </div>
+         
+       </form>
+<div style="display: block;float:right;width:70%">     
+<empty name='detaillist'>
+	<div class="personal_info_none_goods">
+				<p>没有该商品编号，<a href='{:U("index/index")}' class="red">查询错误</a></p>
+			
+				<div class="cb"></div>
+			</div>
+	<else />
+       
+    
+        
+        <volist name="detaillist" id="vo"> 
+		<table style="display: block;padding:5px;" id="table" class="detailtable" width="100%">
+      
+         <tbody >
+		   <tr width="100%">
+                <th width="65%">名称</th>
+                <th width="28%">数量</th> 
+				<th>单价</th>
+            </tr>
+        
+      
+        
+          <tr>
+                <td><span class="img_1 img1"><A href="{:U('Article/detail?id='.$vo['goodid'])}" > <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/><span class="img_1_h">{$vo.goodid|get_good_name}</span></span> </A></td>
+               
+                <td align="center">{$vo.goodid|get_good_price}</td>
+                <td >{$vo.num}</td>
+                
+             
+            </tr> 	
+		  <tr><td colspan="5" align="right">时间：{$vo.time|date='Y-m-d',###}&nbsp;金额：<span class="red">{$vo.total}</span>元</td></tr>
+  
+      
+       </tbody>
+    </table> </volist>
+	</empty>
+	
+	
+		
+
+
+</div>
+<script type="text/javascript"> 
+//这时obj就是触发事件的对象，购物车动态删除
+	function delcommon(event) { //获取事件源
+event = event ? event : window.event; 
+var obj = event.srcElement ? event.srcElement : event.target; 
+//这时obj就是触发事件的对象，可以使用它的各个属性 
+//还可以将obj转换成jquery对象，方便选用其他元素 
+str = obj.innerHTML.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+
+	var $obj = $(obj);
+	
+	if(obj.rel=="del")
+{ var gid=obj.name;
+var array=$("#div2 li");//登录用户显示的li的个数
+var arr=$("#goods li");//未登录用户显示的li的个数
+	//全选的实现 定义删的发送路径
+	if(array.length!==4){
+		var del='{:U("Shopcart/delItem")}';
+	
+	}
+else{
+var del='{:U("Shopcart/delItemByuid")}';
+	
+	}
+$.ajax({
+type:'post', //传送的方式,get/post
+url:del, //发送数据的地址
+data:{id:gid},
+ dataType: "json",
+success:function(data)
+{var $obj = $(obj);
+	$obj.parent().remove();
+
+	if(data.num=="0"){  //判断购物车数量是否为0，为0则隐藏底部查看工具
+						$("div.sc_goods_foot").hide();
+						var html='<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>';
+					$("ul.sc_goods_ul").html(html);
+				
+	
+	}
+	else{$("div.sc_goods_foot").show();}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+	
+	} 
+//购物车删除结束
+
+   function delorder(){
+		document.delform.submit();
+		
+		 }
+//全选的实现
+	$(".check-all").click(function(){
+		$(".ids").prop("checked", this.checked);
+	});
+	$(".ids").click(function(){
+		var option = $(".ids");
+		option.each(function(i){
+			if(!this.checked){
+				$(".check-all").prop("checked", false);
+				return false;
+			}else{
+				$(".check-all").prop("checked", true);
+			}
+		});
+	});
+	require(['memberCenter'], function() {
+		var el = document.getElementById('MemberCenterCtrl');
+		avalon.scan(el);
+		avalon.nextTick(function() {
+			el.style.display = 'block';
+		});
+	});
+</script>
+<!-- 个人中心 初始状态 end --></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+        <hr/>
+      
+   
+</block>

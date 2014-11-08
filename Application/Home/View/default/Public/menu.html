@@ -1,0 +1,52 @@
+<!-- 导航条
+================================================== -->
+
+ <div class="menu-wrapper" >
+    <div class="nav-all">
+       <div class="all_class" id="all-class">
+        <h2> <a>商品分类<span class="all_class_arrow"></span></a> </h2>
+      </div>
+      <div class="all-goods" style="display: none;" id="all-goods">
+<volist name="categoryq" id="cate">
+<div class="item">
+          <div class="product"><h4><a href="{:U('home/article/index/category/'.$cate['name'])}">{$cate.title}</a> </h4><s></s> </div>
+            <if condition="$cate['child'] neq false">
+              <div class="product-wrap pos"> 
+            <!--手提袋-->
+            <div class="cf">
+              <div class="fl wd252 pr20">
+                <h2><a href="{:U('home/article/index/category/'.$cate['name'])}">{$cate.title}</a> </h2>
+                <p class="lh30">纸质手提袋定制，设计印刷全部搞定。</p>
+                <ul class="cf">
+                <volist name="cate['child']" id="cate_sub">
+                <li><a href="{:U('home/article/index/category/'.$cate_sub['name'])}">{$cate_sub.title}<i class="icon-chevron-right"></i> </a>
+                    
+              
+                </li>
+                </volist>
+                </ul>
+</div>
+              <dl class="fl wd185 pl20 blee">
+                <dt class="lh36">促销活动</dt>
+                <dd id="stdads"><a href="http://www.xwcms.net" target="_blank" title="手提袋"><img src="__STATIC__/bootstrap/img/0934218124.jpg"></a></dd>
+              </dl>
+            </div> </div>
+            </if>
+       
+        </div>
+</volist>
+        
+      </div></div>
+    
+    
+    <ul class="menu-list cf">
+      <think:nav name="nav">
+                    	<eq name="nav.pid" value="0">
+                       <li>
+                            <a href="{$nav.url|get_nav_url}" target="<eq name='nav.target' value='1'>_blank<else/>_self</eq>">{$nav.title}</a>
+                      </li>
+                        </eq>
+                    </think:nav>
+    </ul>
+    
+  </div>

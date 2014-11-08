@@ -1,0 +1,247 @@
+<extend name="Base/pageall"/>
+
+<block name="body"> 
+<div class="main"><div class="main_nav"><a rel="nofollow" href="/">首页</a>&gt;{$info.category_id|get_location_name}&gt;<p  id="tit"><a class="red fwb"href="{:U('Article/detail?id='.$info['id'])}">{$info.title}</a></p></div><div class="details"><div class="details_left"><div class="details_left_top">
+
+
+<dl class="dl_goods_img dl_goods_img_ppt" style="display:block" data-photoview-maxwidth="498" data-photoview-maxheight="374" data-photoview-imgnum="4">
+<dt class="img"><img src="{$info.cover_id|get_cover='path'}"/></dt>
+
+<dd><a href="#" class="dgi_arrow dgi_left" style="display: none;" title="上一页"></a><ul id="photoViewUl" style="width: 127px;"><!--ms-repeat-start--><li class="active"><img alt="" src="http://img2.template.cache.wps.cn/wps/cdnwps/upload/official/preview/2011-8-25/1_4e5633b3e3488_1.png"></li><!--ms-repeat-end--></ul><a href="#" class="dgi_arrow dgi_right" style="display: none;" title="下一页"></a></dd></dl><div class="dl_goods_info">\<h2 class="dginfo_h2" >{$info.title}</h2><p><span class="dginfo_auther">作者：{$info.uid|get_nickname}</span><span class="personal_logo"></span><span class="dujia"></span><a class="red" href="{$info.uid|get_nickname}">查看他的店铺</a></p><div class="dginfo_wps_info"><p class="dginfo_price_div" style="display: block;">价格：<span class="dginfo_price">￥<em class="price">{$info.price}</em></span><span class="dginfo_important"><a href="https://vip.wps.cn/pay/member/40/?csource=docercom" target="_blank">升级会员享5折</a></span></p><p class="dginfo_price_div" style="display: none;">会员价：<span class="dginfo_price red">￥0</span><span class="dginfo_delect">原价：￥24.99</span></p><p class="dginfo_price_div" style="display: none;" ms-visible="isfree"><span class="dginfo_price red">免费</span></p><ul class="dginfo_info"><li>配送地：{$info.uid|get_address}</li><li style="clear:both; width:100%">
+<form action="{:U("Shopcart/order")}" name="orderform" id="orform" method="post" onsubmit="return trySubmit()"><input type="hidden" name="id[]" value="{$info.id}"/> <p class="num_box">数量：<a onclick="add()" class="J_jia">+</a>  
+         <input type="text" class="num" value="1"  name="num[]" /><a class="J_jian" onclick="reduce()" id="oneA">-</a></p> </form></li><li>预览：886次</li><li>联系：<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$info.uid|get_qq}&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:{$info.uid|get_qq}:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></li><li>净重：{$info.weight}g</li><li class="dginfo_info_last">时间：2014-09-24</li><div class="cb"></div></ul></div><a rel="nofollow" href="javascript:void(0)"  onclick='order({$info.id})' class="dginfo_btn">立刻购买</a>
+<a cnzz="详细页" rel="nofollow" href="javascript:void(0)" onclick='buy({$info.id})' class="dginfo_btn"  >加入购物车</a><div class="dginfo_function"><a rel="nofollow" href="javascript:vod(0);" onclick="favor()" class="dginfo_function1">收藏</a><a rel="nofollow" href="#" class="dginfo_function2">分享</a><div class="delect_warnning" style="display: none;"><div class="dw_content"><span class="warnning_logo"></span><div class="dwc_right"><p>您已收藏过！</p><a rel="nofollow" href="javascript:void(0)" class="warnning_btn" style="margin-left: 20px;">确定</a></div></div></div><div class="share_to" style="display: none;"><h3>分享到…</h3></div></div></div><div class="cb"></div></div><div class="dl_goods_detail"><h3 class="dgdm_preview_h3">商品详情</h3>
+<Div style="clear:both; overflow:hidden">
+        <section id="contents">{$info.content}</section></Div>
+<div class="dgd_main"><div class="dgdm_tag">标签:<foreach name="marklist" item="vo"> <span><a href="{:U('Article/detail?id='.$vo)}" class="ddi_name"  title="{$vo|get_good_name}">
+{$vo|get_good_name}</a></span></foreach></div><div class="dgdm_difference dgdm_difference_ppt" style="display: block;"><h3 class="dgdm_preview_h3">同类宝贝推荐</h3>
+<ul class="dgdm_difference_img_div"> <foreach name="linklist" item="vo">  
+<li> <a href="{:U('Article/detail?id='.$vo)}" class="ddi_link " title="{$vo|get_good_name}"><img src="{$vo|get_cover_id|get_cover='path'}" alt="{$vo|get_good_name}" width="120" height="90"/> </a>
+<a href="{:U('Article/detail?id='.$vo)}" class="ddi_name"  title="{$vo|get_good_name}">
+{$vo|get_good_name}</a><span class="red"style="text-align:left">  {$vo|get_good_price}元</span></li>
+</foreach></ul>
+
+ 
+</div></div></div>
+</div>
+
+
+
+<div class="details_right"><dl><dt>本周热门物品</dt><volist name="viewlist" id="vo">
+<dd><a class="details_right_img" href="{:U('Article/detail?id='.$vo['id'])}" title="{$vo.title}"><img src="{$vo.cover_id|get_cover='path'}"  alt="{$vo.title}" style="display: inline-block;"></a><a href="{:U('Article/detail?id='.$vo['id'])}" class="details_right_title" title="{$vo.title}">{$vo.title}</a><span class="fwb mcm_title_price">￥<span class="red">{$vo.id|get_good_price}</span></span></dd></volist></dl></div><div class="cb"></div></div>
+
+</div>
+   
+  <!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     
+  <div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="glyphicon glyphicon-remove" id="ticon"></i></button>
+<h3 id="myModalLabel">用户登录</h3>
+</div><div class="m_img"><img src="__IMG__/1.png"></div>
+    <form class="form-horizontal" id="loginform" name="user" method="post">
+    
+            <div class="control-group">   <input type="text" id="inputusername"   name="username" placeholder="用户名">
+   
+
+  
+              <input type="text" id="inputpassword" name="password" placeholder="密码">
+			  
+				<input type="button"  id="login_btn_cart" class="btn" value="登录">
+            </div>
+ 
+    <div class="control-group">
+    
+   
+   <p><span class="pull-right"><span>还没有账号? <a href="{:U("User/register")}">立即注册</a></span> </p>
+ 
+    </div>
+    </form>
+</div>
+   
+    <div class="span9 main-content">
+        <!-- Contents
+        ================================================== -->
+    
+
+ <script type="text/javascript">
+        function trySubmit() {
+            if (this.submitFlag == 1) {
+                alert('数据已经提交，请勿再次提交。');
+                return false;
+            }
+            else {
+                this.submitFlag = 1;               
+                return true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+	function favor() { 
+	var array=$(" #div2 li");
+if(array.length==4){
+var favorid='{$info.id}';
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("User/favor")}', //发送数据的地址
+data:{id:favorid},
+ dataType: "json",
+success:function(data){
+	alert(data.msg)
+	}
+	,
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+})	
+}
+
+else{
+alert("请先登陆")
+}
+	
+	}
+	
+	function delcommon(event) { //获取事件源
+event = event ? event : window.event; 
+var obj = event.srcElement ? event.srcElement : event.target; 
+//这时obj就是触发事件的对象，可以使用它的各个属性 
+//还可以将obj转换成jquery对象，方便选用其他元素 
+str = obj.innerHTML.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+
+	var $obj = $(obj);
+	
+	if(obj.rel=="del")
+{ var gid=obj.name;
+var array=$("#div2 li");//登录用户显示的li的个数
+var arr=$("#goods li");//未登录用户显示的li的个数
+	//全选的实现 定义删的发送路径
+	if(array.length!==4){
+		var del='{:U("Shopcart/delItem")}';
+	
+	}
+else{
+var del='{:U("Shopcart/delItemByuid")}';
+	
+	}
+$.ajax({
+type:'post', //传送的方式,get/post
+url:del, //发送数据的地址
+data:{id:gid},
+ dataType: "json",
+success:function(data)
+{var $obj = $(obj);
+	$obj.parent().remove();
+
+	if(data.num=="0"){  //判断购物车数量是否为0，为0则隐藏底部查看工具
+						$("div.sc_goods_foot").hide();
+						var html='<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>';
+					$("ul.sc_goods_ul").html(html);
+				
+	
+	}
+	else{$("div.sc_goods_foot").show();}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+	
+	} 
+ function order(i)
+{
+	var array=$("#div2 li");
+if(array.length==4){
+document.orderform.submit();
+}
+
+else{
+
+$('#myModal').modal('show');
+}
+}
+function buy(i)
+{
+	var gid=i;
+var url='{:U("Shopcart/addItem")}';//地址
+var gnum=$(".num").val();//数量
+var gprice=$(".price").text();//价格
+var src=$(".img").html();//图片
+var title=$("#tit").html();//名称
+$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("Shopcart/addItem")}', //发送数据的地址
+ data:{
+	 id:gid,num:gnum,price:gprice
+ },
+ dataType: "json",
+success:function(data)
+{
+
+var html='<li>'+src+title+'<span class="red" style="text-align:left"> '
++gprice+'元</span>'+'<a name="'+gid+'" rel="del" class="red" onclick="delcommon(event)">删除</a>'+'</li>';//创建节点
+if(data.exsit=="1"){
+	alert("购物车已存在该商品，数量+1");
+//后台返回数据，判断购物车中是否已存在，存在，不追加节点
+
+}	
+else{
+alert(data.msg);//后台返回数据，判断购物车中是否已存在，不存在，追加节点
+	$("p.sc_goods_none").remove();//移除节点
+$("ul.sc_goods_ul").append(html);//追加节点
+
+}
+if(data.num=="0"){ //判断数量是否为0，为0则隐藏底部查看工具
+						$("div.sc_goods_foot").hide();
+	}
+	else{$("div.sc_goods_foot").show();}
+},
+error:function (XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+  
+function add() {
+
+ var num = $(".num").val();     
+num++;  
+     $(".num").val(num); 
+} 
+function reduce() {
+
+ var num = $(".num").val();     
+
+if(num>1)  
+      { num--; 
+    $(".num").val(num);
+      }
+	  else{
+		  $("#oneA").addClass("important"); }
+
+}  
+ //登录后刷新页面，载入数据
+$("#login_btn_cart").click(function(){
+	   
+   var yourname=$('#inputusername').val();
+	var yourword=$('#inputpassword').val();
+		
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("User/logincart")}', //发送数据的地址
+data:{username:yourname,password:yourword},
+ dataType: "json",
+success:function(data)
+{ if(data.status=="1"){alert(data.info);document.orderform.submit();}
+else{alert(data.info);
+
+}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+});});
+    </script>
+        <hr/>
+        {:hook('documentDetailAfter',$info)}
+    </div>
+</block>

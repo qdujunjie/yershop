@@ -1,0 +1,253 @@
+<extend name="Base/pageall"/>
+<block name="body">
+
+<div class="main"><div class="main_nav"><a rel="nofollow" href="/">首页</a>&gt;<p class="red fwb">个人中心</p></div><div class="main_center"><div class="center_left"><dl><dt><a rel="nofollow">订单中心</a></dt><dd><a rel="nofollow" href='{:U("center/index")}'>主页</dd>
+<dd><a rel="nofollow" href='{:U("center/coupon")}'>优惠券</dd><dd><a rel="nofollow" href='{:U("center/allorder")}'>我的全部订单</a></dd>
+</dl><dl class="last"><dt><a rel="nofollow">个人中心</a></dt><dd><a href='{:U("center/information")}'>账户信息</a></dd><dd><a rel="nofollow" href='{:U("shopcart/index")}'>我的购物车</a></dd><dd><a rel="nofollow" href='{:U("center/collect")}'>我的收藏</a></dd></dl></div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+	<div class="personal_info">
+		<div class="pi_my">
+			<a rel="nofollow" href="https://vip.wps.cn/center/#!/center/information/head" target="_blank" class="pi_my_img">
+				<img src="http://q.qlogo.cn/qqapp/100360965/321A1DAB59659C9633B4D881C68C592D/100">
+			</a>
+			<div class="pi_my_div">
+				<div class="pi_my_div_top">
+					<a href="https://vip.wps.cn/center/#!/center/" class="pi_my_name" title="云云1412694646">{$uid|get_nickname}</a>
+					<span class="qingtong"></span><span class="dujia" style="display:none;"></span>
+					<span class="grade_text">{$uid|get_lever}</span>
+					
+					
+				</div>
+				<div class="pi_food_div">
+					
+				
+<a rel="nofollow" href="{:U("center/coupon")}" class="pi_food_btn" >优惠券<span class="red">{$num|default="0"}</span>张</a>
+					<a rel="nofollow" href="{:U("center/coupon")}" class="pi_food_btn" >免费领优惠券</a>
+				</div>
+			
+
+			<div class="pi_food_div pi_food_div2">
+				<p class="pi_food_price">
+					我的积分<span class="red" id="score">{$uid|get_score}</span>点				
+				</p>							
+			</div>
+			<div class="cb"></div>
+				
+			</div>
+			<div class="cb"></div>
+		</div>
+
+		<div class="pi_food">
+			<a href="javascript:void(0)" class="pf_qiandao" onclick="qiandao()">每日签到</a>
+			{:hook('checkin')}  
+		</div>
+		<div class="cb"></div>
+	</div>
+	<h3 class="cr_h3 cr_h3_gray">最近订单</h3>
+	
+	<empty name='lateorder'>
+	<div class="personal_info_none_goods">
+				<p>你的订单还是空的哦<br>赶快行动吧！</p>
+				<a rel="nofollow" href="/latest/" class="ping_btn">马上购物</a>
+				<div class="cb"></div>
+			</div>
+	<else />
+       
+    
+          <form action='{:U("Shopcart/delorder")}' method="post" name="delform" >
+       <div class="order_del">
+			  <span>  <input class="checkbox check-all" type="checkbox"> 全选 <a   href='javascript:vod(0)' onclick="delorder()">删除选中的订单</a> </span></div>
+          <volist name="lateorder" id="po"> <table  id="table" class="gridtable" width="100%">
+        <thead>
+            <tr><th class="row-selected">
+					<input class="ids row-selected" type="checkbox" name="id[]" value="{$po.orderid}">
+					</th> 
+                <th >订单号：{$po.orderid}</th>
+				<th ><a href="{:U('order/detail?id='.$po['orderid'])}" >订单详情</a></th>
+                <th > {$po.ptime}</th>
+               
+                <th class="info">{$po.backinfo}</th>
+            </tr>
+        </thead>
+      
+        <tbody> <volist name="po['id']" id="vo"> 
+          <tr><td width="40"></td>
+                <td><span class="img_1 img1"><A href="{:U('Article/detail?id='.$vo['goodid'])}" > <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/><span class="img_1_h">{$vo.goodid|get_good_name}</span></span> </A></td>
+               
+                <td align="center">{$vo.goodid|get_good_price}</td>
+                <td >{$vo.num}</td>
+                
+                <td>{$vo.goodid|get_good_price}</td>
+            </tr> </volist>
+		
+			  <tr><td colspan="5" align="right">金额小计：<span class="red">{$po.pricetotal}</span>元(运费<span class="red">{$po.shipprice}</span>元)<php>$pay=$po['ispay'];
+			  if($pay==1){ echo "<A class='red' href='http://".$_SERVER['HTTP_HOST']."/index.php?s=/Home/Pay/index/orderid/".$po['orderid']."'>前去支付</a>";};
+			  
+			  
+			  </php>  </td>
+			</tr>
+         
+       
+        </tbody>
+      
+    </table> </volist>	
+       </form>
+       
+	</empty>
+	<h3 class="tab">
+		<a rel="nofollow" href="javascript:vod(0);" >我的购物车</a>
+		<a rel="nofollow" href="javascript:vod(0);">我的收藏</a>
+	</h3>
+	<div style="display: block;" class="tab_view">
+		<div id="my_shopping_car" style="display: block;">
+			<empty name='cartlist'>
+	<div class="personal_info_none_goods">
+				<p>你的购物车还是空的哦<br>赶快行动吧！</p>
+				<a rel="nofollow" href="{:U("shopcart/index")}" class="ping_btn">马上购物</a>
+				<div class="cb"></div>
+			</div>
+	<else />
+ <form  name="form" id="form">
+	<table  id="table" class="gridtable" width="100%">
+        <thead>
+            <tr>
+                <th >商品名</th>
+                <th >价格</th>
+                <th >数量</th>
+                <th >操作</th>
+            </tr>
+        </thead>
+       
+        <tbody>
+    
+          <volist name="cartlist" id="vo">  
+          <tr>
+                <td><span class="img_1 img1"><A href="{:U('Article/detail?id='.$vo['goodid'])}" > <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/><span class="img_1_h">{$vo.goodid|get_good_name}</span></span> </A></td>
+               
+                <td align="center">{$vo.price}</td>
+                <td ><a rel="jia"  class="jia" onclick="myfunction(event)">+</a><input type="text"  class="num"  id="{$vo.goodid}" value="{$vo.num}"/><a rel="jian" onclick="myfunction(event)" class="jian" id="oneA">-</a></td>
+                
+                <td><a  name="{$vo.goodid}" rel="del" onclick="myfunction(event)">删除</a>&nbsp;<a href="#">移到收藏</a></td>
+            </tr>
+         </volist>
+        
+        </tbody>
+      
+    </table> </form>
+		</empty>	
+	</div>
+
+		<div id="my_shopping_car" style="display: none;">
+		<empty name='favorlist'>
+		<div class="personal_info_none_goods">
+			<p>你的收藏列表还是空的哦<br>赶快行动吧！</p>
+			<a rel="nofollow" href="http://www.docer.com" class="ping_btn">马上收藏</a>
+			<div class="cb"></div>
+		
+		</div>
+		<else />
+		<ul> <volist name="favorlist" id="vo"> 
+		<li><span><A href="{:U('Article/detail?id='.$vo['goodid'])}" > <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/>{$vo.goodid|get_good_name}</span><span>{$vo.goodid|get_good_name}</span><span>{$vo.goodid|get_good_price}</span></li>
+</volist></ul>
+		</empty>
+	</div>
+
+</div>
+<script type="text/javascript">
+//这时obj就是触发事件的对象，购物车动态删除
+	function delcommon(event) { //获取事件源
+event = event ? event : window.event; 
+var obj = event.srcElement ? event.srcElement : event.target; 
+//这时obj就是触发事件的对象，可以使用它的各个属性 
+//还可以将obj转换成jquery对象，方便选用其他元素 
+str = obj.innerHTML.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+
+	var $obj = $(obj);
+	
+	if(obj.rel=="del")
+{ var gid=obj.name;
+var array=$("#div2 li");//登录用户显示的li的个数
+var arr=$("#goods li");//未登录用户显示的li的个数
+	//全选的实现 定义删的发送路径
+	if(array.length!==4){
+		var del='{:U("Shopcart/delItem")}';
+	
+	}
+else{
+var del='{:U("Shopcart/delItemByuid")}';
+	
+	}
+$.ajax({
+type:'post', //传送的方式,get/post
+url:del, //发送数据的地址
+data:{id:gid},
+ dataType: "json",
+success:function(data)
+{var $obj = $(obj);
+	$obj.parent().remove();
+
+	if(data.num=="0"){  //判断购物车数量是否为0，为0则隐藏底部查看工具
+						$("div.sc_goods_foot").hide();
+						var html='<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>';
+					$("ul.sc_goods_ul").html(html);
+				
+	
+	}
+	else{$("div.sc_goods_foot").show();}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+	
+	} 
+//购物车删除结束
+
+//全选的实现
+	$(".check-all").click(function(){
+		$(".ids").prop("checked", this.checked);
+	});
+	$(".ids").click(function(){
+		var option = $(".ids");
+		option.each(function(i){
+			if(!this.checked){
+				$(".check-all").prop("checked", false);
+				return false;
+			}else{
+				$(".check-all").prop("checked", true);
+			}
+		});
+	})
+		
+  function qiandao(){
+var b='{:U("center/enter")}';
+  $.ajax({
+             type: "GET",
+             url: "{:U("center/enter")}",
+             data: {username:b},
+             dataType: "json",
+             success: function(data){
+                        alert(data.msg);
+						$("span#score").html(data.score);
+                      }
+         });
+}
+function delorder(){
+		document.delform.submit();
+		
+		 }
+	require(['memberCenter'], function() {
+		var el = document.getElementById('MemberCenterCtrl');
+		avalon.scan(el);
+		avalon.nextTick(function() {
+			el.style.display = 'block';
+		});
+	});
+</script>
+<!-- 个人中心 初始状态 end --></div><div id="memberInfo" style="display: none;"></div><div id="memberWealth" style="display: none;"></div><div id="myCollection" style="display: none;"></div><div id="myEarnings" style="display: none;"></div><div id="modifyPassword" style="display: none;"></div><div id="myCoupons" style="display: none;"></div><div class="cb"></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+        <hr/>
+        {:hook('documentDetailAfter',$info)}
+   
+</block>

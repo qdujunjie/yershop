@@ -1,0 +1,33 @@
+<extend name="Base/pageall"/>
+
+<block name="header">
+	<header class="jumbotron subhead" id="overview">
+		<div class="container">
+			<h2>源自相同起点，演绎不同精彩！</h2>
+			<p class="lead"></p>
+		</div>
+	</header>
+</block>
+
+<block name="body">
+     
+        <!-- Contents
+        ================================================== -->
+      
+	  <div class="ml_content"><ul class="ml_content_top"><li><a rel="nofollow" href="{:U('Article/lists?category='.$category['name'])}" class="mct_a active">热度</a></li><li><a rel="nofollow" href="{:U('Article/lists?category='.$category['name'].'&rank=new')}" class="mct_a">最新</a></li></ul><ul class="ml_content_main ml_content_main_ppt">
+      
+         <volist name="list" id="list" offset="1" length="20" empty="暂时没有数据" >
+          <li>
+                    <a href="{:U('Article/detail?id='.$list['id'])}"> <img src="{$list.cover_id|get_cover='path'}"/></a>
+             <p> <a href="{:U('Article/detail?id='.$list['id'])}"> {$list.title}</a></p>     
+                       <p><span class="red" title="预览：{$list.id|get_good_price}">价格：{$list.id|get_good_price}</span></p>  <p><span class="gray" title="预览：{$list.view}">预览：{$list.view}</span></p>&nbsp;&nbsp;
+              </li>      
+            </volist>
+			</ul></div>
+
+            <div class="onethink pagination pagination-right pagination-large">
+                <article:page cate="$category['id']" listrow="$category['list_row']" />
+            </div>
+        </section>
+    
+</block>

@@ -1,0 +1,55 @@
+<?php
+// +----------------------------------------------------------------------
+// | OneThink [ WE CAN DO IT JUST THINK IT ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2013 http://www.onethink.cn All rights reserved.
+// +----------------------------------------------------------------------
+// | Author: 麦当苗儿 <zuojiazi@vip.qq.com> <http://www.zjzit.cn>
+// +----------------------------------------------------------------------
+
+namespace Home\Model;
+use Think\Model;
+use Think\Page;
+
+/**
+ * 文档基础模型
+ */
+class shoplist_orderModel extends Model{
+
+   
+/*****未完成订单
+***************/
+
+public  function unfinishedOrder() {
+       $order=D("shoplist_order");
+	   $ulist=$order->where("status='0'")->select();
+	return $ulist; 
+}
+/*****待处理订单
+***************/
+public  function befinishedOrder() {
+       $order=D("shoplist_order");
+	   $ulist=$order->where("status='1'")->select();
+	return $ulist; 
+}
+/*****已完成订单
+***************/
+public  function finishedOrder() {
+       $order=D("shoplist_order");
+	    $haslist=$order->where("status='2'")->select();
+		return $haslist; 
+}
+/*****最近已完成10笔订单
+***************/
+public  function latestOrder() {
+       $order=M("shoplist_order");
+	   $latest=$order->where("status='2'")->limit('10')->order('id asc')->select();
+       $detail=M("shoplist");
+	   foreach($latest as $n=> $val){
+       $latest[$n]['id']=$detail->where('orderid=\''.$val['id'].'\'')->select();
+      
+     }
+		return $latest; 
+}
+
+}

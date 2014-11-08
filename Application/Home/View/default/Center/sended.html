@@ -1,0 +1,141 @@
+<extend name="Base/pageall"/>
+<block name="body">
+
+<div class="main"><div class="main_nav"><a rel="nofollow" href="/">首页</a>&gt;<p class="red fwb">个人中心</p></div><div class="main_center"><div class="center_left"><dl><dt><a rel="nofollow">订单中心</a></dt><dd><a rel="nofollow" href='{:U("center/index")}'>主页</dd>
+<dd><a rel="nofollow" href='{:U("center/coupon")}'>优惠券</dd><dd><a rel="nofollow" href='{:U("center/allorder")}'>我的全部订单</a></dd>
+</dl><dl class="last"><dt><a rel="nofollow">个人中心</a></dt><dd><a href='{:U("center/information")}'>账户信息</a></dd><dd><a rel="nofollow" href='{:U("shopcart/index")}'>我的购物车</a></dd><dd><a rel="nofollow" href='{:U("center/collect")}'>我的收藏</a></dd></dl></div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+<span class="red" style="display: block;padding:15px;font-size:17px;">已发货订单</span>
+
+	<empty name='send'>
+	<div class="personal_info_none_goods">
+				<p>没有已发货订单，<a href='{:U("index/index")}' class="red">快去下单吧</a></p>
+			
+				<div class="cb"></div>
+			</div>
+	<else /><form action='{:U("Shopcart/delorder")}' method="post" name="delform" >
+       <div class="order_del">
+			  <span>  <input class="checkbox check-all" type="checkbox"> 全选 <a   href='javascript:vod(0)' onclick="delorder()">删除选中的订单</a> </span></div>
+          <volist name="send" id="po"> <table  id="table" class="gridtable" width="100%">
+        <thead>
+            <tr><th class="row-selected">
+					<input class="ids row-selected" type="checkbox" name="id[]" value="{$po.orderid}">
+					</th> 
+                <th >订单号：{$po.orderid}</th>
+				<th ><a href="{:U('order/detail?id='.$po['orderid'])}" >订单详情</a></th>
+                <th > {$po.ptime|date='Y-m-d H:i:s',###}</th>
+                <th ><a href="{:U('order/cancel?id='.$po['orderid'])}" > {$po.info|default='取消订单'}</a></th>
+                <th class="info"><strong>{$po.backinfo}<strong></th>
+            </tr>
+        </thead>
+      
+        <tbody> <volist name="po['id']" id="vo"> 
+          <tr><td width="40"></td>
+                <td><span class="img_1 img1"><A href="{:U('Article/detail?id='.$vo['goodid'])}" > <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/><span class="img_1_h">{$vo.goodid|get_good_name}</span></span> </A></td>
+               
+                <td align="center">{$vo.goodid|get_good_price}</td>
+                <td >{$vo.num}</td>
+                
+             
+            </tr> </volist>
+		
+			  <tr><td colspan="5" align="right">金额小计：<span class="red">{$po.pricetotal}</span>元(运费<span class="red">{$po.shipprice}</span>元)<span class="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+			</tr>
+         
+       
+        </tbody>
+      
+    </table> </volist>	
+       </form>
+       
+	</empty>
+	
+	<div style="display: block;" class="tab_view">
+		
+
+
+</div>
+<script type="text/javascript"> 
+//这时obj就是触发事件的对象，购物车动态删除
+	function delcommon(event) { //获取事件源
+event = event ? event : window.event; 
+var obj = event.srcElement ? event.srcElement : event.target; 
+//这时obj就是触发事件的对象，可以使用它的各个属性 
+//还可以将obj转换成jquery对象，方便选用其他元素 
+str = obj.innerHTML.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+
+	var $obj = $(obj);
+	
+	if(obj.rel=="del")
+{ var gid=obj.name;
+var array=$("#div2 li");//登录用户显示的li的个数
+var arr=$("#goods li");//未登录用户显示的li的个数
+	//全选的实现 定义删的发送路径
+	if(array.length!==4){
+		var del='{:U("Shopcart/delItem")}';
+	
+	}
+else{
+var del='{:U("Shopcart/delItemByuid")}';
+	
+	}
+$.ajax({
+type:'post', //传送的方式,get/post
+url:del, //发送数据的地址
+data:{id:gid},
+ dataType: "json",
+success:function(data)
+{var $obj = $(obj);
+	$obj.parent().remove();
+
+	if(data.num=="0"){  //判断购物车数量是否为0，为0则隐藏底部查看工具
+						$("div.sc_goods_foot").hide();
+						var html='<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>';
+					$("ul.sc_goods_ul").html(html);
+				
+	
+	}
+	else{$("div.sc_goods_foot").show();}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+	
+	} 
+//购物车删除结束
+
+   function delorder(){
+		document.delform.submit();
+		
+		 }
+//全选的实现
+	$(".check-all").click(function(){
+		$(".ids").prop("checked", this.checked);
+	});
+	$(".ids").click(function(){
+		var option = $(".ids");
+		option.each(function(i){
+			if(!this.checked){
+				$(".check-all").prop("checked", false);
+				return false;
+			}else{
+				$(".check-all").prop("checked", true);
+			}
+		});
+	});
+	require(['memberCenter'], function() {
+		var el = document.getElementById('MemberCenterCtrl');
+		avalon.scan(el);
+		avalon.nextTick(function() {
+			el.style.display = 'block';
+		});
+	});
+</script>
+<!-- 个人中心 初始状态 end --></div><div id="memberInfo" style="display: none;"></div><div id="memberWealth" style="display: none;"></div><div id="myCollection" style="display: none;"></div><div id="myEarnings" style="display: none;"></div><div id="modifyPassword" style="display: none;"></div><div id="myCoupons" style="display: none;"></div><div class="cb"></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+        <hr/>
+        {:hook('documentDetailAfter',$info)}
+   
+</block>

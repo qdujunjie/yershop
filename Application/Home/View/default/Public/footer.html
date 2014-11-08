@@ -1,0 +1,81 @@
+
+    <!-- 底部
+    ================================================== -->
+   <script type="text/javascript" src="__STATIC__/js/menudown.js"></script> 
+	<script>
+	//购物车显示与隐藏
+	var a= document.getElementById('shopping_cart');
+  var b = document.getElementById('goods');
+            var timerr = null;//定义定时器变量
+            //鼠标移入div1或div2都把定时器关闭了，不让他消失
+            a.onmouseover = b.onmouseover = function ()
+            {
+                b.style.display = 'block';
+                clearTimeout(timerr);
+            }
+            //鼠标移出div1或div2都重新开定时器，让他延时消失
+            a.onmouseout = b.onmouseout = function ()
+            {
+                //开定时器
+                timerr= setTimeout(function () { 
+                    b.style.display = 'none'; }, 500);
+            }
+			
+			
+			</script>
+
+<div class="footer">
+    <div class="foot_center">        
+        <ul class="foot_title clearfix">
+            <li class="foot_title_first"><a href="/helpcenter-after_sales.html#service"></a></li>
+            <!-- <li class="foot_title_second"><a href="/helpcenter-after_sales.html#service"></a></li>
+             -->
+            <li class="foot_title_third"><a href="/helpcenter-send.html#cost"></a></li>
+            <li class="foot_title_forth"><a href="/helpcenter-after_sales.html#query"></a></li>
+        </ul>
+        <div class="foot_list clearfix">
+            <dl class="dl_foot_list_first">
+    <dt class="dt_foot_list_first"><img src="http://shop.vivo.com.cn/themes/vivo/widgets/vivo_helper/images/txt_gmlc.jpg" alt="购买流程"></dt>
+    <dd><a href="{:U("Service/index?id=19")}" title="支付宝支付">支付宝支付</a></dd>
+    <dd><a href="/helpcenter-purchase_process.html#invoice" title="发票说明">发票说明</a></dd>
+    <dd><a href="/helpcenter-purchase_process.html#coupon" title="优惠券说明">优惠券说明</a></dd>
+</dl>
+<dl class="dl_foot_list_second">
+    <dt class="dt_foot_list_second"><img src="http://shop.vivo.com.cn/themes/vivo/widgets/vivo_helper/images/txt_psfs.jpg" alt="配送方式"></dt>
+    <dd><a href="/helpcenter-send.html#way" title="配送方式">配送方式</a></dd>
+    <dd><a href="/helpcenter-send.html#cost" title="配送费用">配送费用</a></dd>
+    <dd><a href="/helpcenter-send.html#notice" title="签收须知">签收须知</a></dd>
+</dl>
+<dl class="dl_foot_list_third">
+    <dt class="dt_foot_list_third"><img src="http://shop.vivo.com.cn/themes/vivo/widgets/vivo_helper/images/txt_fwzc.jpg" alt="服务支持"></dt>
+    <dd><a href="/helpcenter-service_guarantee.html" title="服务保证">服务保证</a></dd>
+    <dd><a href="/helpcenter-after_sales.html#service" title="售后服务">售后服务</a></dd>
+    <dd><a href="/helpcenter-after_sales.html#query" title="售后网点查询">售后网点查询</a></dd>
+</dl>
+<dl class="dl_foot_list_forth">
+    <dt class="dt_foot_list_forth"><img src="http://shop.vivo.com.cn/themes/vivo/widgets/vivo_helper/images/txt_ppfw.jpg" alt="品牌服务"></dt>
+    <dd><a href="http://www.vivo.com.cn/service-faq_zhineng.html" title="常见问题" target="_blank">常见问题</a></dd>
+    <dd><a href="http://www.vivo.com.cn/download.html" title="相关下载" target="_blank">相关下载</a></dd>
+    <dd><a href="/helpcenter-contact_us.html" title="联系我们">联系我们</a></dd>
+</dl>
+<div class="online">
+    <h3><img src="http://shop.vivo.com.cn/themes/vivo/widgets/vivo_helper/images/pic_xv.jpg" alt="小V在线时段"></h3>
+    <p>周一至周五 08:00-21:00</p>
+    <p>周六、周日 09:00-18:00</p>
+	<p><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={:C('QQ')}&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:{:C('QQ')}:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></p>
+</div>
+        </div>
+    </div>
+   
+<div class="theme-footer"> 
+    
+	<p><span style="color: rgb(83, 83, 83); font-family: 'Microsoft YaHei'; text-align: center;">友情链接 :<a href="http://m.kuaidi100.com" target="_blank">快递查询</a> </span></p>
+  
+      
+       <p><span style="color: rgb(83, 83, 83); font-family: 'Microsoft YaHei'; text-align: center;"> Copyright 2014-2015 本站由 <strong><a href="http://www.ijquery.net/" target="_blank">yershop</a></strong> 强力驱动 保留一切权利{:C('WEB_SITE_ICP')}</p>
+    
+	</div>
+<include file="Public/var"/>
+<block name="script"></block> <!-- 用于加载js代码 -->
+<!-- 页面footer钩子，一般用于加载插件JS文件和JS代码 -->
+{:hook('pageFooter', 'widget')}

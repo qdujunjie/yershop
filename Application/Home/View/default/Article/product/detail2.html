@@ -1,0 +1,397 @@
+<extend name="Base/pageall"/>
+
+<block name="body"> 
+<div class="main">
+<div class="main_nav"><a rel="nofollow" href="/">首页</a>&gt;{$info.category_id|get_location_name}&gt;<p  id="tit"><a class="red fwb"href="{:U('Article/detail?id='.$info['id'])}">{$info.title}</a></p></div>
+<div class="details">
+<div class="details_left">
+<!-- 商品描述-->
+<div class="details_left_top">
+<!-- jqzoom-->
+<div id=wwwzzjsnet>
+	<div class=jqzoom id=spec-n1 ><IMG height="350" src="{$info.cover_id|get_cover='path'}" jqimg="{$info.cover_id|get_cover='path'}" width="350">
+	</div>
+	<div id=spec-n5>
+		<div class=control id=spec-left>
+			<img src="__IMG__/btn_mobile_prev_cur.jpg" />
+		</div>
+		<div id=spec-list>
+			<ul class=list-h><php>
+ if(!empty($info['pics'])){ $pics= explode(',',$info['pics']);}else{
+ 
+ $pics="";}</php>
+  <li><img src="{$info.cover_id|get_cover='path'}" height="50" width="50"/></li>
+   <notempty name="pics">
+             <volist name="pics" id="v">
+                   <li><img src="__ROOT__{$v|get_cover='path'}" data-id="{$v}"/> </li>          
+             </volist>
+        </notempty> 
+		<empty name="pics">
+				<li><img src="{$info.cover_id|get_cover='path'}" height="50" width="50"/></li>
+				<li><img src="__IMG__/img02_20110119zzjs_net.jpg"> </li>
+				<li><img src="__IMG__/img03_20110119zzjs_net.jpg"> </li>
+				<li><img src="__IMG__/img04_20110119zzjs_net.jpg"> </li>
+				<li><img src="__IMG__/img01_20110119zzjs_net.jpg"> </li>
+		</empty>
+			</ul>
+		</div>
+		<div class=control id=spec-right>
+			<img src="__IMG__/btn_mobile_next_cur.jpg" />
+		</div>
+    </div>
+</div><!-- js-->
+<SCRIPT src="__STATIC__/js/picchange.js" type=text/javascript></SCRIPT>
+<SCRIPT src="__STATIC__/js/base.js" type=text/javascript></SCRIPT>
+<SCRIPT type=text/javascript>
+$(function(){
+   $(".jqzoom").jqueryzoom({
+	xzoom:400,
+	yzoom:400,
+	offset:10,
+	position:"right",
+	preload:1,
+	lens:1
+});
+	$("#spec-list").jdMarquee({
+	deriction:"left",
+	width:371,
+	height:56,
+	step:2,
+	speed:4,
+	delay:10,
+	control:true,
+	_front:"#spec-right",
+	_back:"#spec-left"
+});
+	$("#spec-list img").bind("mouseover",function(){
+	var src=$(this).attr("src");
+	$("#spec-n1 img").eq(0).attr({
+		src:src.replace("\/n5\/","\/n1\/"),
+		jqimg:src.replace("\/n5\/","\/n0\/")
+	});
+	$(this).css({
+		"border":"2px solid #ff6600",
+		"padding":"1px"
+	});
+}).bind("mouseout",function(){
+	$(this).css({
+		"border":"1px solid #ccc",
+	"padding":"2px"
+	});
+});
+})
+</SCRIPT>
+<SCRIPT src="__STATIC__/js/jqueryzoom-jcarousel.js" type="text/javascript"></SCRIPT>
+<!-- js over-->
+<!-- jqzoom over-->
+<!-- 商品参数-->
+<div class="dl_goods_info">
+<h2 class="dginfo_h2" >{$info.title}</h2>
+<p >价格：<span class="dginfo_price">￥<em class="price">{$info.price}</em></span></p>
+<p >净重：<em class="price">{$info.weight}</em>g</p>
+<ul class="dginfo_info">
+<li>配送地：{$info.uid|get_address}</li>
+<li style="clear:both; width:100%">
+<form action="{:U("Shopcart/order")}" name="orderform" id="orform" method="post" onsubmit="return trySubmit()">
+<input type="hidden" name="id[]" value="{$info.id}"/> 
+<p class="num_box">数量：<a href="javascript:void(0)"   onclick="add()" >+</a>  
+         <input type="text" class="num" value="1"  name="num[]" /><a onclick="reduce()" id="oneA" href="javascript:void(0)" >-</a></p>
+		 
+ </form></li>
+ <li>预览：886次</li>
+ <li class="dginfo_info_last">时间：2014-09-24</li>
+ <li class="dginfo_info_last">赠送积分：{$info.score}</li>
+</ul>
+<!-- buy-->
+<div style="margin-top:20px;overflow:hidden"><a rel="nofollow" href="javascript:void(0)"  onclick='order({$info.id})' class="dginfo_btn">立刻购买</a>
+<a  rel="nofollow" href="javascript:void(0)" onclick='buy({$info.id})' class="dginfo_btn"  >加入购物车</a>
+</div>
+<!-- buy-->
+<p>
+<span>收藏产品：<a href="javascript:vod(0);" onclick="favor()"><img title="收藏按钮" src="__IMG__/icon_favorite_pro.jpg" ></a>
+</span>
+&nbsp;&nbsp;&nbsp;&nbsp;<span>&nbsp;&nbsp;&nbsp;分享到：<a title="分享到新浪微博" target="_blank" href="http://service.t.sina.com.cn/share/share.php?title={$info.title}。（来自{:C('SITENAME')}）&amp;url={:C('DOMAIN')}{:U('Article/detail?id='.$info['id'])}&amp;pic={:C('DOMAIN')}{$info.cover_id|get_cover='path'}" data-item="sina" class="J_vivo_share">
+            <img alt="新浪微博" src="__IMG__/icon_sina_weibo.jpg" app="b2c">        </a>                                                                
+        <a title="分享到腾讯微博" target="_blank" href="http://v.t.qq.com/share/share.php?title={$info.title}（来自{:C('SITENAME')}）。&amp;url={:C('DOMAIN')}{:U('Article/detail?id='.$info['id'])}&amp;pic={:C('DOMAIN')}{$info.cover_id|get_cover='path'}" data-item="tencent" class="J_vivo_share">
+            <img alt="腾讯微博" src="__IMG__/icon_tencent_weibo.jpg" app="b2c">        </a>                                                                
+        <a target="_blank" title="分享到人人网" href="http://widget.renren.com/dialog/share?resourceUrl=http://{:C('DOMAIN')}{:U('Article/detail?id='.$info['id'])};srcUrl={:C('DOMAIN')}&amp;title={$info.title}。（来自{:C('SITENAME')}）&amp;pic=http://{:C('DOMAIN')}{$info.cover_id|get_cover='path'}" data-item="renren" class="J_vivo_share">
+            <img alt="人人网" src="__IMG__/icon_renrenwang.jpg" app="b2c">        </a>           
+</span></p>
+
+</div>
+<!-- 商品参数 结束-->
+</div>
+<!-- 商品描述结束-->
+<div class="dl_goods_detail">
+<h3 class="dgdm_preview_h3">商品详情</h3>
+<Div style="clear:both; overflow:hidden">
+        <section id="contents">{$info.content}</section>
+		</Div>
+</div>
+</div>
+
+
+
+<div class="details_right"><dl><dt>本周热门物品</dt><volist name="viewlist" id="vo">
+<dd><a class="details_right_img" href="{:U('Article/detail?id='.$vo['id'])}" title="{$vo.title}"><img src="{$vo.cover_id|get_cover='path'}"  alt="{$vo.title}" style="display: inline-block;"></a><a href="{:U('Article/detail?id='.$vo['id'])}" class="details_right_title" title="{$vo.title}">{$vo.title}</a><span class="fwb mcm_title_price">￥<span class="red">{$vo.id|get_good_price}</span></span></dd></volist></dl></div></div>
+
+</div>
+  
+   <!-- jQuery 遮罩层 begin -->
+<div id="fullbg"></div>
+<!-- end jQuery 遮罩层 -->
+<!-- 对话框 -->
+<div id="dialog">
+   <!-- Modal 对话框内容 -->
+<div id="myModal" class="modal">
+     
+  <div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="glyphicon glyphicon-remove" id="ticon" onclick="closeBg();"></i></button>
+<h3 id="myModalLabel">用户登录</h3>
+</div><div class="m_img">
+        <a class="" href="/index.php?s=/Home/Addons/execute/_addons/SyncLogin/_controller/Base/_action/login/type/qq.html"><img src="/Public/Home/images/qq.png">&nbsp;用QQ账号登录</a></br></br>
+        <a class="" href="/index.php?s=/Home/Addons/execute/_addons/SyncLogin/_controller/Base/_action/login/type/sina.html"><img src="/Public/Home/images/weibo.png">&nbsp;用微博账号登录</a>
+        <!--<a class="btn btn-warning btn-block" href="">用豆瓣账号登录</a>
+        <a class="btn btn-primary btn-block" href="">用人人账号登录</a>-->
+    </div>
+    <form class="form-horizontal" id="loginform" name="user" method="post">
+    
+            <div class="form_login">   <em class="user glyphicon glyphicon-user"></em> <input type="text"  id="inputusername" name="username" placeholder="用户名">
+   
+ </div>
+    <div class="form_login">
+             <em class="user glyphicon glyphicon-lock"></em> <input  class="v_yerhop"type="text"  id="inputpassword" name="password"  placeholder="密码">
+			  
+				
+            </div><div class="form_login">
+ <input type="button" class="v_yerhop"  id="login_btn_cart" value="登录"> </div>
+    <div class="control-group">
+    
+   
+   <p><span class="pull-right"><span>还没有账号? <a href="{:U("User/register")}" class="now">立即注册</a></span> </p>
+ 
+    </div>
+    </form>
+</div> <!-- Modal 对话框内容 -->
+</div><!-- 对话框 结束-->
+<!-- jQuery 遮罩层上方的对话框 -->
+<script type="text/javascript">
+//显示灰色 jQuery 遮罩层
+function showBg() {
+    var bh = $("body").height();
+    var bw = $("body").width();
+    $("#fullbg").css({
+        height:bh,
+        width:bw,
+        display:"block"
+    });
+    $("#dialog").show();
+}
+//关闭灰色 jQuery 遮罩
+function closeBg() {
+    $("#fullbg,#dialog").hide();
+}
+</script>
+<!--[if lte IE 6]>
+<script type="text/javascript">
+// 浮动对话框
+$(document).ready(function() {
+    var domThis = $('#dialog')[0];
+    var wh = $(window).height() / 2;
+    $("body").css({
+        "background-image": "url(about:blank)",
+        "background-attachment": "fixed"
+    });
+    domThis.style.setExpression('top', 'eval((document.documentElement).scrollTop + ' + wh + ') + "px"');
+});
+</script>
+<![endif]-->
+        <!-- Contents
+        ================================================== -->
+    
+
+ <script type="text/javascript">
+        function trySubmit() {
+            if (this.submitFlag == 1) {
+                alert('数据已经提交，请勿再次提交。');
+                return false;
+            }
+            else {
+                this.submitFlag = 1;               
+                return true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+	//立即购买
+ function order(i)
+{
+var array=$("#div2 li");
+if(array.length==4){
+document.orderform.submit();
+}
+
+else{showBg();
+
+}
+}
+//收藏
+function favor() { 
+	var array=$(" #div2 li");
+if(array.length==4){
+var favorid='{$info.id}';
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("User/favor")}', //发送数据的地址
+data:{id:favorid},
+ dataType: "json",
+success:function(data){
+	alert(data.msg)
+	}
+	,
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+})	
+}
+
+else{
+showBg();
+}
+	
+	}
+	//购物车删除商品
+	function delcommon(event) { 
+		//获取事件源
+event = event ? event : window.event; 
+var obj = event.srcElement ? event.srcElement : event.target; 
+//这时obj就是触发事件的对象，可以使用它的各个属性 
+//还可以将obj转换成jquery对象，方便选用其他元素 
+str = obj.innerHTML.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+
+	var $obj = $(obj);
+	
+	if(obj.rel=="del")
+{ var gid=obj.name;
+var array=$("#div2 li");//登录用户显示的li的个数
+var arr=$("#goods li");//未登录用户显示的li的个数
+	//全选的实现 定义删的发送路径
+	if(array.length!==4){
+		var del='{:U("Shopcart/delItem")}';
+	
+	}
+else{
+var del='{:U("Shopcart/delItemByuid")}';
+	
+	}
+$.ajax({
+type:'post', //传送的方式,get/post
+url:del, //发送数据的地址
+data:{id:gid},
+ dataType: "json",
+success:function(data)
+{var $obj = $(obj);
+	$obj.parent().remove();
+
+	if(data.num=="0"){  //判断购物车数量是否为0，为0则隐藏底部查看工具
+						$("div.sc_goods_foot").hide();
+						var html='<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>';
+					$("ul.sc_goods_ul").html(html);
+				
+	
+	}
+	else{$("div.sc_goods_foot").show();}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+	
+	} 
+//加入购物车
+function buy(i)
+{
+	var gid=i;
+var url='{:U("Shopcart/addItem")}';//地址
+var gnum=$(".num").val();//数量
+var gprice=$(".price").text();//价格
+var src=$(".img").html();//图片
+var title=$("#tit").html();//名称
+$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("Shopcart/addItem")}', //发送数据的地址
+ data:{
+	 id:gid,num:gnum,price:gprice
+ },
+ dataType: "json",
+success:function(data)
+{
+
+var html='<li>'+src+title+'<span class="red" style="text-align:left"> '
++gprice+'元</span>'+'<a name="'+gid+'" rel="del" class="red" onclick="delcommon(event)">删除</a>'+'</li>';//创建节点
+if(data.exsit=="1"){
+	alert("购物车已存在该商品，数量+1");
+//后台返回数据，判断购物车中是否已存在，存在，不追加节点
+
+}	
+else{
+alert(data.msg);//后台返回数据，判断购物车中是否已存在，不存在，追加节点
+	$("p.sc_goods_none").remove();//移除节点
+$("ul.sc_goods_ul").append(html);//追加节点
+
+}
+if(data.num=="0"){ //判断数量是否为0，为0则隐藏底部查看工具
+						$("div.sc_goods_foot").hide();
+	}
+	else{$("div.sc_goods_foot").show();}
+},
+error:function (XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+ //增加数量
+function add() {
+
+ var num = $(".num").val();     
+num++;  
+     $(".num").val(num); 
+}
+//减少数量
+function reduce() {
+
+ var num = $(".num").val();     
+
+if(num>1)  
+      { num--; 
+    $(".num").val(num);
+      }
+	  else{
+		  $("#oneA").addClass("important"); }
+
+}  
+ //登录后刷新页面，载入数据
+$("#login_btn_cart").click(function(){
+	   
+   var yourname=$('#inputusername').val();
+	var yourword=$('#inputpassword').val();
+		
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("User/logincart")}', //发送数据的地址
+data:{username:yourname,password:yourword},
+ dataType: "json",
+success:function(data)
+{if(data.status=="1"){alert(data.info);document.orderform.submit();}
+else{alert(data.info);
+
+}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+});});
+    </script>
+        <hr/>
+        {:hook('documentDetailAfter',$info)}
+    </div>
+</block>

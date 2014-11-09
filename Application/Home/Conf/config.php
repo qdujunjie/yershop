@@ -101,32 +101,32 @@ return array(
     'payment' => array(
         'tenpay' => array(
             // 加密key，开通财付通账户后给予
-            'key' => 'e82573dc7e6136ba414f2e2affbe39fa',
+            'key' =>  C('TENPAYKEY'),
             // 合作者ID，财付通有该配置，开通财付通账户后给予
-            'partner' => '1900000113'
+            'partner' => C('TENPAYPARTNER')
         ),
         'alipay' => array(
             // 收款账号邮箱
-            'email' => '',
+            'email' =>C('ALIPAYEMAIL'),
             // 加密key，开通支付宝账户后给予
-            'key' => '',
+            'key' => C('ALIPAYKEY'),
             // 合作者ID，支付宝有该配置，开通易宝账户后给予
-            'partner' => ''
+            'partner' => C('ALIPAYPARTNER')
         ),
         'palpay' => array(
-            'business' => 'zyj@qq.com'
+            'business' =>  C('PALPAYPARTNER')
         ),
         'yeepay' => array(
-            'key' => '69cl522AV6q613Ii4W6u8K6XuW8vM1N6bFgyv769220IuYe9u37N4y7rI4Pl',
-            'partner' => '10001126856'
+            'key' =>  C('YEEPAYPARTNER'),
+            'partner' =>  C('YEEPAYKEY')
         ),
         'kuaiqian' => array(
-            'key' => '1234567897654321',
-            'partner' => '1000300079901'
+            'key' =>  C('KUAIQIANPARTNER'),
+            'partner' =>  C('KUAIQIANKEY')
         ),
         'unionpay' => array(
-            'key' => '88888888',
-            'partner' => '105550149170027'
+            'key' =>  C('UNIONPARTNER'),
+            'partner' =>  C('UNIONKEY')
         )
     ),
 //支付宝配置参数

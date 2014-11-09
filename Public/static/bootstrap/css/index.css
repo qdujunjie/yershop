@@ -2400,7 +2400,7 @@ line-height: 36px;position: relative;color:#ff4a00}
 div#yc-mod-slider { width:82%; margin: 0 auto; position: relative;float:left;background:#Fff; }
 .fn-clear { zoom: 1; }
 .box_skitter { position: relative; background: none; }
-    .box_skitter ul { display: none; }
+    .box_skitter ul { display: ; }
     .box_skitter .container_skitter { overflow: hidden; position: relative; }
     .box_skitter .image { overflow: hidden; }
         .box_skitter .image img { display: none; }
@@ -2419,7 +2419,7 @@ div#yc-mod-slider { width:82%; margin: 0 auto; position: relative;float:left;bac
 margin: -16px -16px; color: #fff; text-indent: -9999em; overflow: hidden;
 background: url(../../images/ajax-loader.gif) no-repeat left top; width: 31px; height: 31px; }
 #slideshow { width: 980px; height: 318px; }
-    #slideshow ul { display: none; }
+    #slideshow ul {  }
 /* 频道幻灯图over*/
 .ml_content{clear:both;display: block;margin-top: 5px;overflow:hidden}
 .paytype{overflow:hidden;}

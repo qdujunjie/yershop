@@ -7,4 +7,4 @@ Function，the system support palpay ,alipay,tenpay,unionpay,yeepay,kuaiqian pay
 
 安装指南 
 =======
- 先将user下的config.php剪切到一个文件夹，安装onethink,安装完成后把config.php覆盖掉user/conf文件夹内的config.php，清空数据库，导入目录下的yxys.sql，登陆后台，用户名123密码123，，开始使用，此前安装时的用户名已被清空，不可再用
+ 将user/conf下的config.php剪切到一个文件夹，安装onethink,安装完成后将config.php覆盖user/conf文件夹内的config.php，清空数据库，重新导入目录下的yxys.sql，登陆后台，用户名123密码123，开始使用，注意：此前安装时的用户名已被清空，不可再用

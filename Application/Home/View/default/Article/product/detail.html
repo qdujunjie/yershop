@@ -116,7 +116,7 @@ $(function(){
             <img alt="新浪微博" src="__IMG__/icon_sina_weibo.jpg" app="b2c">        </a>                                                                
         <a title="分享到腾讯微博" target="_blank" href="http://v.t.qq.com/share/share.php?title={$info.title}（来自{:C('SITENAME')}）。&amp;url={:C('DOMAIN')}{:U('Article/detail?id='.$info['id'])}&amp;pic={:C('DOMAIN')}{$info.cover_id|get_cover='path'}" data-item="tencent" class="J_vivo_share">
             <img alt="腾讯微博" src="__IMG__/icon_tencent_weibo.jpg" app="b2c">        </a>                                                                
-        <a target="_blank" title="分享到人人网" href="http://widget.renren.com/dialog/share?resourceUrl=http://{:C('DOMAIN')}{:U('Article/detail?id='.$info['id'])};srcUrl={:C('DOMAIN')}&amp;title={$info.title}。（来自{:C('SITENAME')}）&amp;pic=http://{:C('DOMAIN')}{$info.cover_id|get_cover='path'}" data-item="renren" class="J_vivo_share">
+        <a target="_blank" title="分享到人人网" href="http://widget.renren.com/dialog/share?resourceUrl={:C('DOMAIN')}{:U('Article/detail?id='.$info['id'])};srcUrl={:C('DOMAIN')}&amp;title={$info.title}。（来自{:C('SITENAME')}）&amp;pic={:C('DOMAIN')}{$info.cover_id|get_cover='path'}" data-item="renren" class="J_vivo_share">
             <img alt="人人网" src="__IMG__/icon_renrenwang.jpg" app="b2c">        </a>           
 </span></p>
 

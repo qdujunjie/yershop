@@ -35,12 +35,17 @@
 			</div>
 		</div>
 <div class="form-item">
-			<label class="item-label">利润<span class="check-tips">（</span></label>
+			<label class="item-label">取消<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="cancel" value="{$info.cancel}">
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">利润<span class="check-tips"></span></label>
 			<div class="controls">
 				<input type="text" class="text input-large" name="profits" value="{$info.profits}">
 			</div>
-		</div>
-		
+		</div>		
 
 <div class="form-item">
 			<label >备注<span class="check-tips"></span></label>
@@ -53,6 +58,7 @@
      
 		<div class="form-item">
 			<input type="hidden" name="id" value="{$info.id|default=''}">
+	
 			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
 			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
 		</div>

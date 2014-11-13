@@ -1,0 +1,102 @@
+<extend name="Base/pageall"/>
+
+
+<block name="body">
+<div class="mainwrap">
+    
+	<div class="think-form"> <div class="loginform">
+<div class="hd">
+                                    <strong>用户登录</strong><span>已有帐号？点击<a href="{:U("User/register")}">注册</a></span>            </div>
+         <form class="form-horizontal" id="loginform" name="user" method="post">
+          <div class="control-group">
+            <label class="control-label" for="username">用户名</label>
+            <div class="controls">
+              <em class="user glyphicon glyphicon-user"></em><input type="text" class="v_inp"   placeholder="请输入用户名"  id="inputusername" name="username">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">密码</label>
+            <div class="controls">
+             <em class="user glyphicon glyphicon-lock"></em> <input type="password"  class="v_inp" id="inputpassword"  placeholder="请输入密码"   name="password">
+            </div>
+			 <div class="controls Validform_checktip text-warning"></div>
+          </div>
+         
+          <div class="control-group">
+            <div class="controls">
+              <label class="checkbox">
+                <input type="checkbox"> 自动登陆
+              </label>
+              <button type="submit" id="login_btn_cart" class="v_dark_btn">登 陆</button>
+            </div>
+          </div>
+        </form>
+	</div><div class="login-other">{:hook('SyncLogin')}</div>
+    </div>
+<script type="text/javascript">
+//登录后刷新页面，载入数据
+$("#login_btn_cart").click(function(){
+	   
+   var yourname=$('#inputusername').val();
+	var yourword=$('#inputpassword').val();
+		
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("User/logincart")}', //发送数据的地址
+data:{username:yourname,password:yourword},
+ dataType: "json",
+success:function(data)
+{if(data.status=="1"){
+window.location.href='/';}
+else{alert(data.info);
+
+}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+});});
+    </script>	
+</block>
+
+<block name="side"> </block>
+<block name="script">
+	<script type="text/javascript">
+
+    	$(document)
+	    	.ajaxStart(function(){
+	    		$("button:submit").addClass("log-in").attr("disabled", true);
+	    	})
+	    	.ajaxStop(function(){
+	    		$("button:submit").removeClass("log-in").attr("disabled", false);
+	    	});
+
+
+    	$("form").submit(function(){
+    		var self = $(this);
+    		$.post(self.attr("action"), self.serialize(), success, "json");
+    		return false;
+
+    		function success(data){
+    			if(data.status){
+    				window.location.href = data.url;
+    			} else {
+    				self.find(".Validform_checktip").text(data.info);
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    	});
+
+		$(function(){
+			var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify").click(function(){
+                if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+		});
+	</script>
+</block>

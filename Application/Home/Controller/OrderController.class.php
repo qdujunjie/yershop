@@ -256,7 +256,7 @@ $this->display('canceldetail');
 
 }
 public function wuliu(){
- $id= I('get.id');//获取id
+ $id= I('get.orderid');//获取id
 	$typeCom=M("order")->where("orderid='$id'")->getField("tool"); 
 	$typeNu=M("order")->where("orderid='$id'")->getField("toolid"); 
     if(isset($typeCom)&&$typeNu){ 
@@ -279,7 +279,7 @@ public function wuliu(){
     /* 热词调用*/
     $hotsearch=R("Index/getHotsearch");
     $this->assign('hotsearch',$hotsearch);
-$this->display(); 
+    $this->display(); 
 
 }
 

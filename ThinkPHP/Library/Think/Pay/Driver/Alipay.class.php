@@ -6,15 +6,15 @@ class Alipay extends \Think\Pay\Pay {
 
     protected $gateway = 'https://mapi.alipay.com/gateway.do';
     protected $verify_url = 'http://notify.alipay.com/trade/notify_query.do';
-    protected $config = array(
-        'email' => 'liuweifordream@163.com',
-        'key' => 'liuweifordream@163.com',
-        'partner' => 'liuweifordream@163.com'
+    protected $config = array(       
+        'email' => '',
+        'key' => '',
+        'partner' => ''
     );
 
     public function check() {
         if (!$this->config['email'] || !$this->config['key'] || !$this->config['partner']) {
-            E("支付宝设置有误！");
+            E("支付宝账号未开通！");
         }
         return true;
     }

@@ -459,23 +459,21 @@ $list=$turnover->where("status='3'")->select();
    public function edit($id = 0){
         if(IS_POST){
             $Form = D('turnover');
-       
+ 
+          $user=session('user_auth');
+          $uid=$user['uid'];
             if($_POST["id"]){
+			  $Form->create();
 				$id=$_POST["id"];
-                  $Form->creat();
-         
 			    /*更新时间*/
-            $Form->update_time = NOW_TIME;
-			/* 编辑后保存编辑人*/
-              $user=session('user_auth');
-               $Form->uid = $user["uid"];
-           $result=$Form->where("id='$id'")->save();
+	       $Form->update_time = NOW_TIME;
+             $result=$Form->where("id='$id'")->save();
                 if($result){
                     //记录行为
                     action_log('update_turnover', 'turnover', $data['id'], UID);
                     $this->success('更新成功', Cookie('__forward__'));
                 } else {
-                    $this->error('更新失败55'.$id);
+                    $this->error('更新失败'.$id);
                 }
             } else {
                 $this->error($Config->getError());

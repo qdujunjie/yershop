@@ -23,7 +23,7 @@
                 <th >订单号：{$po.orderid}</th>
 				
                 <th > {$po.ptime|date='Y-m-d',###}</th>
-				<th >  <a href="{:U('order/cancel?id='.$po['orderid'])}" > <span class="red">{$po.act_getwuliu}</span></a></th>
+				
                <th ><a href="{:U('order/detail?id='.$po['orderid'])}" >订单详情</a>
 			   <php>$pay=$po['status'];
 			  if($pay==2){ echo "<A class='red' href='http://".$_SERVER['HTTP_HOST']."/index.php?s=/Home/order/wuliu/orderid/".$po['orderid']."'>查看物流</a>";};  </php> 

@@ -1,23 +1,23 @@
-<extend name="Base/order" />
+<extend name="Base/pageall"/>
 
 
 <block name="body">
-<section><div class="mainwrap">
+<div class="mainwrap">
     
 	<div class="think-form"> <div class="loginform">
 <div class="hd">
                                     <strong>用户登录</strong><span>已有帐号？点击<a href="{:U("User/register")}">注册</a></span>            </div>
-        <form class="form-horizontal" action="__SELF__" method="post" class="login">
+         <form class="form-horizontal"  action="{:U("User/login")}" id="loginform" name="user" method="post">
           <div class="control-group">
             <label class="control-label" for="username">用户名</label>
             <div class="controls">
-              <em class="user glyphicon glyphicon-user"></em><input type="text" class="v_inp" id="username" class="span3" placeholder="请输入用户名"  ajaxurl="/member/checkUserNameUnique.html" errormsg="请填写1-16位用户名" nullmsg="请填写用户名" datatype="*1-16" value="" name="username">
+              <em class="user glyphicon glyphicon-user"></em><input type="text" class="v_inp"     id="inputusername" name="username">
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="inputPassword">密码</label>
             <div class="controls">
-             <em class="user glyphicon glyphicon-lock"></em> <input type="password" id="inputPassword" class="v_inp"  class="span3" placeholder="请输入密码"  errormsg="密码为6-20位" nullmsg="请填写密码" datatype="*6-20" name="password">
+             <em class="user glyphicon glyphicon-lock"></em> <input type="password"  class="v_inp" id="inputpassword"    name="password">
             </div>
 			 <div class="controls Validform_checktip text-warning"></div>
           </div>
@@ -27,17 +27,16 @@
               <label class="checkbox">
                 <input type="checkbox"> 自动登陆
               </label>
-              <button type="submit" class="v_dark_btn">登 陆</button>
+              <button type="submit" id="login_btn_cart" class="v_dark_btn">登 陆</button>
             </div>
           </div>
         </form>
 	</div><div class="login-other">{:hook('SyncLogin')}</div>
     </div>
-</section>
-	
+
 </block>
 
-<block name="side"> </block>
+
 <block name="script">
 	<script type="text/javascript">
 
@@ -50,14 +49,14 @@
 	    	});
 
 
-    	$("form").submit(function(){
+    	$("#loginform").submit(function(){
     		var self = $(this);
-    		$.post(self.attr("action"), self.serialize(), success, "json");
+    		$.post(self.attr("action"),self.serialize(),success,"json");
     		return false;
 
     		function success(data){
     			if(data.status){
-    				window.location.href = data.url;
+    				window.location.href =data.url;
     			} else {
     				self.find(".Validform_checktip").text(data.info);
     				//刷新验证码

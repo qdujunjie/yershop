@@ -33,7 +33,7 @@ class PublicController extends \Think\Controller {
                 $Member = D('Member');
                 if($Member->login($uid)){ //登录用户
                     //TODO:跳转到登录前页面
-                    $this->success('登录成功！', U('Index/index'));
+                    $this->success('登录成功！', U('Admin/Index/index'));
                 } else {
                     $this->error($Member->getError());
                 }

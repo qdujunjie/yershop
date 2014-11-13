@@ -359,7 +359,8 @@ body{
     float: right;
 }
 .columns-mod .bd {
-    
+    height: 255px;
+    overflow-y: auto;
     background-color: #fafafa;
     *overflow-x:hidden;
 }

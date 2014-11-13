@@ -18,12 +18,12 @@ class MemberModel extends Model{
 
     /* 用户模型自动完成 */
     protected $_auto = array(
-        array("login", 0, self::MODEL_INSERT),
-        array("reg_ip", "get_client_ip", self::MODEL_INSERT, "function", 1),
-        array("reg_time", NOW_TIME, self::MODEL_INSERT),
-        array("last_login_ip", 0, self::MODEL_INSERT),
-        array("last_login_time", 0, self::MODEL_INSERT),
-        array("status", 1, self::MODEL_INSERT),
+        array('login', 0, self::MODEL_INSERT),
+        array('reg_ip', 'get_client_ip', self::MODEL_INSERT, 'function', 1),
+        array('reg_time', NOW_TIME, self::MODEL_INSERT),
+        array('last_login_ip', 0, self::MODEL_INSERT),
+        array('last_login_time', 0, self::MODEL_INSERT),
+        array('status', 1, self::MODEL_INSERT),
     );
 
     /**
@@ -38,14 +38,14 @@ class MemberModel extends Model{
             /* 在当前应用中注册用户 */
         	$Api = new UserApi();
         	$info = $Api->info($uid);
-            $user = $this->create(array("nickname" => $info[1], "status" => 1));
-            $user["uid"] = $uid;
+            $user = $this->create(array('nickname' => $info[1], 'status' => 1));
+            $user['uid'] = $uid;
             if(!$this->add($user)){
-                $this->error = "前台用户信息注册失败，请重试！";
+                $this->error = '前台用户信息注册失败，请重试！';
                 return false;
             }
-        } elseif(1 != $user["status"]) {
-            $this->error = "用户未激活或已禁用！"; //应用级别禁用
+        } elseif(1 != $user['status']) {
+            $this->error = '用户未激活或已禁用！'; //应用级别禁用
             return false;
         }
 
@@ -53,7 +53,7 @@ class MemberModel extends Model{
         $this->autoLogin($user);
 
         //记录行为
-        action_log("user_login", "member", $uid, $uid);
+        action_log('user_login', 'member', $uid, $uid);
 
         return true;
     }
@@ -63,8 +63,8 @@ class MemberModel extends Model{
      * @return void
      */
     public function logout(){
-        session("user_auth", null);
-        session("user_auth_sign", null);
+        session('user_auth', null);
+        session('user_auth_sign', null);
     }
 
     /**
@@ -74,26 +74,26 @@ class MemberModel extends Model{
     private function autoLogin($user){
         /* 更新登录信息 */
         $data = array(
-            "uid"             => $user["uid"],
-            "login"           => array("exp", "`login`+1"),
-            "last_login_time" => NOW_TIME,
-            "last_login_ip"   => get_client_ip(1),
+            'uid'             => $user['uid'],
+            'login'           => array('exp', '`login`+1'),
+            'last_login_time' => NOW_TIME,
+            'last_login_ip'   => get_client_ip(1),
         );
         $this->save($data);
 
         /* 记录登录SESSION和COOKIES */
         $auth = array(
-            "uid"             => $user["uid"],
-            "username"        => get_username($user["uid"]),
-            "last_login_time" => $user["last_login_time"],
+            'uid'             => $user['uid'],
+            'username'        => get_username($user['uid']),
+            'last_login_time' => $user['last_login_time'],
         );
-        session("user_auth", $auth);
-        session("uid", $auth["uid"]);
-        session("user_auth_sign", data_auth_sign($auth));
+        session('user_auth', $auth);
+        session('uid', $auth["uid"]);
+        session('user_auth_sign', data_auth_sign($auth));
 
     }
 public  function uid() {
-       $user=session("user_auth");
+       $user=session('user_auth');
 	   $uid=$user["uid"]; 
 	   return $uid;
 		 
